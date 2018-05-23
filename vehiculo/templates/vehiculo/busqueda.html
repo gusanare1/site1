@@ -1,0 +1,46 @@
+{% extends 'vehiculo/base.html' %}
+
+	{% block javascript %}
+	  
+	{% endblock %}
+
+    {% block content %}
+        <h1>Searching Car</h1>
+		
+		<input type='text' id='busqueda_modelo' placeholder='Busqueda por modelo'/>
+		<div id='div_cars'>
+		<ul id='cars'>
+		
+		</ul>
+		</div>
+        <form method="POST" class="post-form">
+			{% csrf_token %}			
+            
+			
+			<script>
+			$(document).ready(function() {
+            $("#busqueda_modelo").on("change", getCar);
+        });
+			
+        function getCar() {
+            var nombre = $("#busqueda_modelo").val();
+            if (nombre) {
+                //$("#id_modelo").html("");
+                var request = $.ajax({
+                    type: "GET",
+                    url: "{% url 'get_cars_by_model_name' %}",
+                    data: {
+                        "nombre": nombre,
+                    },
+                });
+                request.done(function(response) {
+                    // Agregamos los resultados al select
+                    $("#cars").html(response.carros);
+                });
+            } else {
+                $("#cars").html("");
+                }
+        }   
+	  </script>
+            </form>
+    {% endblock %}

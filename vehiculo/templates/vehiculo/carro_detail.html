@@ -1,0 +1,20 @@
+ {% extends 'vehiculo/base.html' %}
+
+    {% block content %}
+       
+            {{ carro.placa }}
+			{{ carro.anio }}
+			{{ carro.precio }}
+			
+			{% if carro.esta_inspeccionado %}
+			<h1>HAY INSPECCION </h1>
+				{{ carro.color }}
+				{{inspeccion.choque}}
+				{{inspeccion.observacion}}
+			{%else%}
+			<h1>NO HAY INSPECCION </h1>
+			{%endif%}
+			
+			{{ carro.provincia }}
+			
+    {% endblock %}

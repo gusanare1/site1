@@ -1,0 +1,68 @@
+{% extends 'vehiculo/base.html' %}
+
+	{% block javascript %}
+	  
+	{% endblock %}
+
+    {% block content %}
+        <h1>New Car</h1>
+        <form method="POST" class="post-form">
+			{% csrf_token %}			
+            {{ form.as_p }}
+			
+			<script>
+			
+			       $(document).ready(function() {
+			$valu_p = $("#id_provincia").html()
+            $("#id_provincia").on("change", getCiudades);
+			$("#id_marca").on("change", getModelos);
+			
+        });
+
+        function getCiudades() {
+            var ProvinciaId = $("#id_provincia").val();
+            if (ProvinciaId) {
+                // Eliminamos las opciones anteriores del select
+                $("#id_ciudad").html("");
+                var request = $.ajax({
+                    type: "GET",
+                    url: "{% url 'get_ciudades' %}",
+                    data: {
+                        "provincia_id": ProvinciaId,
+                    },
+                });
+                request.done(function(response) {
+                    // Agregamos los resultados al select
+                    $("#id_ciudad").html(response.ciudades);
+                    
+                });
+            } else {
+                $("#id_ciudad").html("");
+                }
+        }    
+			
+
+        function getModelos() {
+            var marcaId = $("#id_marca").val();
+            if (marcaId) {
+                $("#id_modelo").html("");
+                var request = $.ajax({
+                    type: "GET",
+                    url: "{% url 'get_modelos' %}",
+                    data: {
+                        "marca_id": marcaId,
+                    },
+                });
+                request.done(function(response) {
+                    // Agregamos los resultados al select
+                    $("#id_modelo").html(response.modelos);
+                    
+                });
+            } else {
+                $("#id_modelo").html("");
+                }
+        }   
+	  </script>
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+    {% endblock %}
