@@ -25,7 +25,7 @@ SECRET_KEY = '6uw_d4r=b_2_02xdum(7yr!_7x92)2#w+syya!tnfy$5u46qrz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-ALLOWED_HOSTS = ['localhost','pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost','gusanare.pythonanywhere.com']
 import logging
 if DEBUG:
     # will output to your console

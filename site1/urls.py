@@ -21,6 +21,7 @@ handler500 = 'vehiculo.views.handler500'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+	
 	path('vehiculo/', include('vehiculo.urls')),
 
 ]
