@@ -1,0 +1,26 @@
+{% extends 'vehiculo/base.html' %}
+
+	{% block javascript %}
+	  
+	{% endblock %}
+
+    {% block content %}
+        <h1>Search Car</h1>
+        <form method="POST" class="post-form">
+			{% csrf_token %}			
+           Marca: <select name = "marca">
+			{% for marca in marcas %}
+				<option value="{{ marca.nombre }}"> {{ marca.nombre }} </option>
+			{% endfor %}
+			</select>
+			
+			Modelo: <select name = "modelo">
+			{% for modelo in modelos %}
+				<option value="{{ modelo.nombre }}"> {{ modelo.nombre }} </option>
+			{% endfor %}
+			</select>
+			
+			Año: <input type="text" name="anio" />
+			<button type="submit" class="save btn btn-default">Buscar</button>
+        </form>
+    {% endblock %}

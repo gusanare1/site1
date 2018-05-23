@@ -7,7 +7,10 @@
     {% block content %}
         <h1>Searching Car</h1>
 		
-		<input type='text' id='busqueda_modelo' placeholder='Busqueda por modelo'/>
+		<input type='text' list='modelos' id='busqueda_modelo' placeholder='Busqueda por modelo'/>
+		<datalist id="modelos" name="modelos">
+		
+		</datalist>
 		<div id='div_cars'>
 		<ul id='cars'>
 		
@@ -20,7 +23,27 @@
 			<script>
 			$(document).ready(function() {
             $("#busqueda_modelo").on("change", getCar);
-        });
+			$("#busqueda_modelo").keypress(getModelName);
+			});
+			function getModelName()
+			{
+			
+			var nombre = $("#busqueda_modelo").val();
+            if (nombre) {
+                //$("#id_modelo").html("");
+                var request = $.ajax({
+                    type: "GET",
+                    url: "{% url 'get_model_name' %}",
+                    data: {
+                        "nombre": nombre,
+                    },
+                });
+                request.done(function(response) {
+                    // Agregamos los resultados al select
+                    $("#modelos").html(response.modelos);
+                });
+            };
+			}
 			
         function getCar() {
             var nombre = $("#busqueda_modelo").val();

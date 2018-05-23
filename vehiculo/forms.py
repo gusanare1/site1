@@ -53,3 +53,7 @@ class SignUpForm(UserCreationForm):
 		model = User
 		fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email','celular','ciudad',)
 		
+class BusquedaForm(ModelForm):
+	marca = forms.ModelChoiceField(queryset = Marca.objects.all())
+	modelo = forms.ModelChoiceField(queryset = Modelo.objects.all())
+	anio = forms.CharField(max_length=20, label='Year')

@@ -27,15 +27,30 @@ def get_modelos(request):
 	return JsonResponse(response)
 	
 def get_cars_by_model_name(request):
-	nombre_ = request.GET.get('nombre')
+	nombre = request.GET.get('nombre')
 	carros = Carro.objects.none()
 	options = ''
 	nombre = nombre_.replace('%20',' ')
 	if nombre:
-		modelo_id = Modelo.objects.filter(nombre=nombre)[0]
-		carros = Carro.objects.filter(modelo_id=modelo_id)
+		#modelo_id = Modelo.objects.filter(nombre__contains=nombre)
+		carros = Carro.objects.filter(modelo__nombre__contains=nombre)
 	for carro in carros:
 		options += "<li> <a href='%s/'> %s</li>" %(carro.pk, carro.placa+"-"+carro.provincia.nombre)
 	response={}
 	response['carros'] = options
+	return JsonResponse(response)
+	
+	
+def get_model_name(request):
+	nombre = request.GET.get('nombre')
+	modelos = Modelo.objects.none()
+	options = ''
+	if nombre:
+		#modelos = Modelo.objects.filter(nombre__contains=nombre)
+		modelos = Carro.objects.filter(modelo__nombre__contains = nombre)
+	for modelo_carro in modelos:
+		print(modelo_carro)
+		options += '<option value="%s">' %(modelo_carro.modelo.nombre)
+	response={}
+	response['modelos'] = options
 	return JsonResponse(response)
