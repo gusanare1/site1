@@ -1,18 +1,38 @@
 {% extends 'vehiculo/base.html' %}
+{# Load the tag library #}
+
 
 	{% block javascript %}
 	  
 	{% endblock %}
 
     {% block content %}
-        <h1>New Car</h1>
-        <form method="POST" class="post-form">
+	   {% load bootstrap3 %}
+<legend>New Car</legend>
+        <form method="POST" class="post-form" role='form'>
 			{% csrf_token %}			
-            {{ form.as_p }}
-			
+
+<div class="container container-table">
+    <div class="row vertical-center-row">>
+{% bootstrap_form form layout='vertical' %}   
+
+</div>
+</div> 
 			<script>
 			
+
+			
+			 
+				
+
 			       $(document).ready(function() {
+				   
+$('select').append($("<option selected='selected'>", {
+    value: 0,
+    text: '---',
+	
+}));
+
 			$valu_p = $("#id_provincia").html()
             $("#id_provincia").on("change", getCiudades);
 			$("#id_marca").on("change", getModelos);
@@ -63,6 +83,8 @@
                 }
         }   
 	  </script>
-            <button type="submit" class="save btn btn-default">Guardar</button>
-        </form>
+	      <div class="form-group">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+			</div>
+	  </form>
     {% endblock %}

@@ -70,7 +70,11 @@ class Carro(models.Model):
 	#ant = models.ForeignKey(Ant, on_delete = models.CASCADE, default=-1)
 	
 	def __str__(self):
-		return self.modelo.nombre+" "+self.placa
+		if self.esta_inspeccionado:
+			tex_ = "(Esta Inspeccionado)"
+		else:
+			tex_ = "(No esta inspeccionado)"
+		return self.modelo.nombre+" "+self.placa+" "+tex_
 	
 	
 class Inspeccion(models.Model):

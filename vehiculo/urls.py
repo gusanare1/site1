@@ -21,7 +21,7 @@ from .ajax import get_ciudades, get_modelos, get_cars_by_model_name, get_model_n
 urlpatterns = [
 
 		path(r'busqueda/', views.form_busqueda, name='busqueda'),
-        path(r'ind/', views.HomeView.as_view(), name='ind'),
+        path(r'ind/', views.CarroListView.as_view(), name='ind'),
         path(r'busqueda/<int:pk>/', views.carro_detail, name="carro_detail"),
         path(r'new/', views.carro_new, name='carro_new'),
 		path(r'ajax/get_ciudades', get_ciudades, name = 'get_ciudades'),

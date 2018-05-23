@@ -3,7 +3,7 @@ from .forms import CarroForm, SignUpForm, BusquedaForm
 from .models import Color, Marca, Modelo, Provincia, Ciudad, Carro, Inspeccion, Persona
 # Create your views here.
 from django.http import JsonResponse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView,ListView
 from django.http import HttpResponseRedirect
 from django.forms.models import inlineformset_factory
 
@@ -36,20 +36,27 @@ def bad_request(request):
 	response.status_code = 404
 	return response
 
+	
+	
 '''
 gusanare@espol.edu.ec
 '''
 
-class HomeView(TemplateView):
+class CarroListView(ListView):
 	template_name = 'vehiculo/index.html'
-
+	model = Carro
+	queryset = Carro.objects.filter(esta_inspeccionado=True)
+		
 class BusquedaView(TemplateView):
 	template_name = 'vehiculo/busqueda.html'
 
 	
 def carro_new(request):
 	if not request.user.is_authenticated:
+		request.session['error'] = "No logueado"
 		return redirect('../../vehiculo/login')
+	else :
+		request.session['error']=""
 		
 	if request.method == "POST":
 		form = CarroForm(request.POST)
@@ -87,7 +94,7 @@ def form_busqueda(request):
 		modelo = request.POST.get("modelo")
 		anio = request.POST.get("anio")
 		
-		carro = Carro.objects.filter(marca__nombre=marca, modelo__nombre=modelo, anio=anio)[0]
+		carros = Carro.objects.filter(marca__nombre=marca, modelo__nombre=modelo, anio=anio)[0]
 		carro = get_object_or_404(Carro, pk=carro.id)
 		inspeccion = get_object_or_404(Inspeccion, carro_id=carro.id)
 		return render(request, 'vehiculo/carro_detail.html', {'carro': carro, 'inspeccion':inspeccion})
@@ -97,9 +104,13 @@ def form_busqueda(request):
 		modelos = Modelo.objects.all()
 			
 		return render(request, 'vehiculo/carro_search.html', {'marcas': marcas, 'modelos':modelos})
-			
+	
+'''
+SI NO HAY INSPECCION, NO SE MEUESTRA EL CARRO
+'''	
 def carro_detail(request, pk):
 	carro = get_object_or_404(Carro, pk=pk)
+	
 	inspeccion = get_object_or_404(Inspeccion, carro_id=carro.id)
 	
 	return render(request, 'vehiculo/carro_detail.html', {'carro': carro, 'inspeccion':inspeccion})

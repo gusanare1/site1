@@ -1,19 +1,21 @@
 {% extends 'vehiculo/base.html' %}
 
 {% block content %}
-    <h1>Lista de carros</h1>
+    <h1>Book List</h1>
 
-    {% if carro_list %}
+    {% if book_list %}
     <ul>
 
       {% for carro in carro_list %}
       <li>
-        <a href="../../vehiculo/busqueda/{{ carro.id }}">{{ carro }}</a>
+        <a href="{{ carro.placa }}">{{ carro.placa }}</a> ({{carro.anio}})
       </li>
       {% endfor %}
 
     </ul>
     {% else %}
       <p>No hay carros disponibles.</p>
-    {% endif %}       
+    {% endif %
+
+}       
 {% endblock %}
