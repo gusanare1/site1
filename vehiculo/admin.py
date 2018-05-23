@@ -14,7 +14,7 @@ admin.site.register(Marca)
 admin.site.register(Modelo)
 admin.site.register(Provincia)
 admin.site.register(Ciudad)
-admin.site.register(Carro)
+#admin.site.register(Carro)
 #admin.site.register(Persona)
 
 admin.site.register(Inspeccion)
