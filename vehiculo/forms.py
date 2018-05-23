@@ -43,8 +43,8 @@ class SignUpForm(UserCreationForm):
 	first_name = forms.CharField(max_length=32, label='First name')
 	last_name=forms.CharField( max_length=32, label='Last name')
 	email=forms.EmailField(max_length=64, help_text='Enter a valid email address')
-	cedula = forms.CharField(max_length=10, label='Cedula')
-	celular = forms.CharField(max_length=10, label='Celular')
+	cedula = forms.IntegerField(max_length=10, label='Cedula')
+	celular = forms.IntegerField(max_length=10, label='Celular')
 	ciudad = forms.CharField(max_length=10, label='Ciudad')
 	password1=forms.CharField(max_length=30, label='Password')
 	password2=forms.CharField(max_length=20, label='Password Again')
@@ -56,4 +56,15 @@ class SignUpForm(UserCreationForm):
 class BusquedaForm(ModelForm):
 	marca = forms.ModelChoiceField(queryset = Marca.objects.all())
 	modelo = forms.ModelChoiceField(queryset = Modelo.objects.all())
-	anio = forms.CharField(max_length=20, label='Year')
+	anio = forms.IntegerField( label='Year')
+	
+	def clean(self):
+		cd = self.cleaned_data
+		marca = cd.get("marca")
+		modelo = cd.get("modelo")
+		anio = cd.get("anio")
+		'''
+		if int(anio)<1900:
+			return ValidateError("Carro antiguo")
+		'''
+		return cd
