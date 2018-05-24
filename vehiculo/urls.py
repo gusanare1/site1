@@ -18,8 +18,8 @@ from django.urls import path,include
 from . import views
 from .ajax import get_ciudades, get_modelos, get_cars_by_model_name, get_model_name
 
-urlpatterns = [
 
+urlpatterns = [
 		path(r'busqueda/', views.form_busqueda, name='busqueda'),
         path(r'ind/', views.CarroListView.as_view(), name='ind'),
         path(r'busqueda/<int:pk>/', views.carro_detail, name="carro_detail"),

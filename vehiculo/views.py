@@ -36,7 +36,9 @@ def bad_request(request):
 	response.status_code = 404
 	return response
 
-	
+
+def mensaje(request, mensaje):
+	request.session['error'] = mensaje	
 	
 '''
 gusanare@espol.edu.ec
@@ -49,7 +51,7 @@ class CarroListView(ListView):
 		
 class BusquedaView(TemplateView):
 	template_name = 'vehiculo/busqueda.html'
-
+ 
 	
 def carro_new(request):
 	if not request.user.is_authenticated:
@@ -61,9 +63,26 @@ def carro_new(request):
 	if request.method == "POST":
 		form = CarroForm(request.POST)
 		if form.is_valid():
+			import re
 			carro = form.save(commit=False)
 			carro.usuario = request.user
+			modelo = request.POST.get('modelo')
+			modelo_ = modelo.replace(' ','') #	quitamos los espacios (no son alfanumericos)
+			patron ="\W" #CARACTERES NO ALFANUMERICOS (posible danino)
+			if re.search(patron, modelo_):
+				carro.save() #lanza error....
+			else:
+				carro.modelo = Modelo.objects.get(id=modelo)
+			
+			ciudad = request.POST.get('ciudad')
+			ciudad_ = ciudad.replace(' ','') #	quitamos los espacios (no son alfanumericos)
+			patron ="\W" #CARACTERES NO ALFANUMERICOS (posible danino)
+			if re.search(patron, ciudad_):
+				carro.save() #lanza error....
+			else:
+				carro.ciudad = Ciudad.objects.get(id=ciudad)
 			carro.save()
+			mensaje(request, "Carro Creado")
 			return redirect('ind')
 	else:
 		form = CarroForm()

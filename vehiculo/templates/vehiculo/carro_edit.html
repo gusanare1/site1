@@ -13,7 +13,7 @@
 			{% csrf_token %}			
 
 <div class="container container-table">
-    <div class="row vertical-center-row">>
+    <div class="row vertical-center-row">
 {% bootstrap_form form layout='vertical' %}   
 
 </div>
@@ -43,7 +43,7 @@ $('select').append($("<option selected='selected'>", {
             var ProvinciaId = $("#id_provincia").val();
             if (ProvinciaId) {
                 // Eliminamos las opciones anteriores del select
-                $("#id_ciudad").html("");
+                $ciudades=$("#id_ciudad").html();
                 var request = $.ajax({
                     type: "GET",
                     url: "{% url 'get_ciudades' %}",
@@ -62,6 +62,9 @@ $('select').append($("<option selected='selected'>", {
         }    
 			
 
+			
+			
+			
         function getModelos() {
             var marcaId = $("#id_marca").val();
             if (marcaId) {

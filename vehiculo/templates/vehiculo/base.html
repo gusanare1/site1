@@ -1,3 +1,11 @@
+{% load admin_static %}
+{% block blockbots %}
+  {{ block.super }}
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive_rtl.css' %}" />
+{% endblock %}
+
 {% load staticfiles %}
 
     <html>
@@ -5,13 +13,32 @@
             <title>Shop Car</title>
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
-          
+			<meta name="viewport" content="width=device-width; maximum-scale=1; minimum-scale=1;" />
             <link rel="stylesheet" href="{% static 'css/blog.css' %}"/>
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+html, body {
+    height: 100%;
+}
+
+body {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.content {
+
+    height: 100%;
+}
+
+</style>
 		</head>
         <body>
 		
-<div class="container container-table">
+<div class="content " >
     <div class="row vertical-center-row">>
 		
 		
@@ -41,7 +68,7 @@
 
 </div>
 
-            <div class="content container">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-8">
                         {% block content %}

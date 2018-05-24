@@ -14,6 +14,21 @@ def get_ciudades(request):
 	response['ciudades'] = options
 	return JsonResponse(response)
 	
+
+def remove_ciudades(request):
+	provincia_id = request.GET.get('provincia_id')
+	ciudades = Ciudad.objects.none()
+	options = ''
+	if provincia_id:
+		ciudades = Ciudad.objects.filter(provincia_id=provincia_id)
+	for ciudad in ciudades:
+		options += '<option value="%s">%s</option>' %(ciudad.pk, ciudad.nombre)
+	response={}
+	response['ciudades'] = options
+	return JsonResponse(response)
+		
+	
+	
 def get_modelos(request):
 	marca_id = request.GET.get('marca_id')
 	modelos = Modelo.objects.none()
@@ -42,6 +57,20 @@ def get_cars_by_model_name(request):
 	
 	
 def get_model_name(request):
+	nombre = request.GET.get('nombre')
+	modelos = Modelo.objects.none()
+	options = ''
+	if nombre:
+		#modelos = Modelo.objects.filter(nombre__contains=nombre)
+		modelos = Carro.objects.filter(modelo__nombre__contains = nombre)
+	for modelo_carro in modelos:
+		print(modelo_carro)
+		options += '<option value="%s">' %(modelo_carro.modelo.nombre)
+	response={}
+	response['modelos'] = options
+	return JsonResponse(response)
+
+def remove_cities(request):
 	nombre = request.GET.get('nombre')
 	modelos = Modelo.objects.none()
 	options = ''

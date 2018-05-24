@@ -12,11 +12,21 @@ class CarroForm(ModelForm):
 	#fields = ('anio','precio','esta_inspeccionado', )
 	provincia = forms.ModelChoiceField(queryset = Provincia.objects.all(), empty_label=None)
 	color = forms.ModelChoiceField(queryset = Color.objects.all(), empty_label=None)
-	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.none(), empty_label=None)
-	modelo = forms.ModelChoiceField(queryset = Modelo.objects.none(), empty_label=None)
+	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.all())
+	modelo = forms.ModelChoiceField(queryset = Modelo.objects.all())
 	marca = forms.ModelChoiceField(queryset = Marca.objects.all(), empty_label=None)
-	usuario = forms.CharField(disabled=True)
+	usuario = forms.CharField(disabled=True, required=False)
 	
+	def clean(self):
+		cd = self.cleaned_data
+		marca = cd.get('marca')
+		anio = cd.get("anio")
+		
+		if anio<1900:
+			#raise forms.ValidationError("Carro")
+			self.add_error('anio','El carro es demasiado viejo')
+		return cd
+		
 	class Meta:
 		#fields = ('anio','precio','esta_inspeccionado', 'provincia', 'ciudad', 'dueno')
 		exclude = ('id','esta_inspeccionado','inspeccion',)
@@ -43,8 +53,8 @@ class SignUpForm(UserCreationForm):
 	first_name = forms.CharField(max_length=32, label='First name')
 	last_name=forms.CharField( max_length=32, label='Last name')
 	email=forms.EmailField(max_length=64, help_text='Enter a valid email address')
-	cedula = forms.IntegerField(max_length=10, label='Cedula')
-	celular = forms.IntegerField(max_length=10, label='Celular')
+	cedula = forms.IntegerField( label='Cedula')
+	celular = forms.IntegerField( label='Celular')
 	ciudad = forms.CharField(max_length=10, label='Ciudad')
 	password1=forms.CharField(max_length=30, label='Password')
 	password2=forms.CharField(max_length=20, label='Password Again')
@@ -63,8 +73,8 @@ class BusquedaForm(ModelForm):
 		marca = cd.get("marca")
 		modelo = cd.get("modelo")
 		anio = cd.get("anio")
-		'''
-		if int(anio)<1900:
+		
+		if anio<1900:
 			return ValidateError("Carro antiguo")
-		'''
+		
 		return cd
