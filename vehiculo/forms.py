@@ -4,7 +4,7 @@ from .models import Carro, Color, Marca, Modelo, Ciudad, Provincia, Persona
 
 class PersonaForm(ModelForm):
 	exclude = ('id')
-
+import re
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
@@ -16,7 +16,7 @@ class CarroForm(ModelForm):
 	modelo = forms.ModelChoiceField(queryset = Modelo.objects.all())
 	marca = forms.ModelChoiceField(queryset = Marca.objects.all(), empty_label=None)
 	usuario = forms.CharField(disabled=True, required=False)
-	import re
+
 	def clean(self):
 		cd = self.cleaned_data
 		marca = cd.get('marca')
