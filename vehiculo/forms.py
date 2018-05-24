@@ -24,7 +24,7 @@ class CarroForm(ModelForm):
 		placa = cd.get('placa')
 		
 		if not re.search("[a-zA-Z]{3}[ -]?\d{4}", placa):
-			self.add_error('placa', "La placa no es correcta (XXX-0XXX)"
+			self.add_error('placa', "La placa no es correcta (XXX-0XXX)")
 			
 		if anio<1900:
 			#raise forms.ValidationError("Carro")
