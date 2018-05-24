@@ -9,19 +9,23 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 class CarroForm(ModelForm):
-	#fields = ('anio','precio','esta_inspeccionado', )
+	fields = ('placa', )
 	provincia = forms.ModelChoiceField(queryset = Provincia.objects.all(), empty_label=None)
 	color = forms.ModelChoiceField(queryset = Color.objects.all(), empty_label=None)
 	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.all())
 	modelo = forms.ModelChoiceField(queryset = Modelo.objects.all())
 	marca = forms.ModelChoiceField(queryset = Marca.objects.all(), empty_label=None)
 	usuario = forms.CharField(disabled=True, required=False)
-	
+	import re
 	def clean(self):
 		cd = self.cleaned_data
 		marca = cd.get('marca')
 		anio = cd.get("anio")
+		placa = cd.get('placa')
 		
+		if not re.search("[a-zA-Z]{3}[ -]?\d{4}", placa):
+			self.add_error('placa', "La placa no es correcta (XXX-0XXX)"
+			
 		if anio<1900:
 			#raise forms.ValidationError("Carro")
 			self.add_error('anio','El carro es demasiado viejo')
