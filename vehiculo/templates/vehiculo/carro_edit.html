@@ -9,7 +9,7 @@
     {% block content %}
 	   {% load bootstrap3 %}
 <legend>New Car</legend>
-        <form method="POST" class="post-form" role='form'>
+        <form method="POST" class="post-form" role='form' enctype='multipart/form-data'>
 			{% csrf_token %}			
 
 <div class=""style="max-width:350px; margin:5% ">

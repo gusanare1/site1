@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include,path
 
+
 handler404 = 'vehiculo.views.handler404'
 handler500 = 'vehiculo.views.handler500'
 
@@ -25,3 +26,8 @@ urlpatterns = [
 	path('vehiculo/', include('vehiculo.urls')),
 
 ]
+from django.conf.urls.static import static
+from django.conf import settings
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

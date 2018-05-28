@@ -54,7 +54,7 @@ class Ant(models.Model):
 from django.contrib.auth.models import User
 
 class Carro(models.Model):
-	placa = models.CharField(max_length=10, default="AAA-0000")
+	placa = models.CharField(max_length=10, default="AAA-0000", help_text = "Ejemplo: XXX-0XXX")
 	anio = models.IntegerField(default = 2000)
 	precio = models.FloatField(default = 0.00)
 	esta_inspeccionado = models.BooleanField(default = False)
@@ -66,9 +66,9 @@ class Carro(models.Model):
 	#dueno = models.CharField(max_length=100, default="No")
 	usuario = models.ForeignKey(User, on_delete = models.DO_NOTHING, default=-1)
 	#inspeccion = models.OneToOneField(Inspeccion, on_delete=models.CASCADE, default=-1)
-	#readonly_fields = ('',)
+	#enreadonly_fields = ('',)
 	#ant = models.ForeignKey(Ant, on_delete = models.CASCADE, default=-1)
-	
+	imagen = models.ImageField( default = 'no_image.jpg')
 	def __str__(self):
 		if self.esta_inspeccionado:
 			tex_ = "(Esta Inspeccionado)"
@@ -83,4 +83,3 @@ class Inspeccion(models.Model):
 	observacion = models.CharField(max_length=200)
 	def __str__(self):
 		return self.choque
-	

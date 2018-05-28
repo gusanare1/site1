@@ -12,6 +12,8 @@ from django.template import RequestContext
 
 from django.contrib import auth
 from django.contrib.auth.models import User
+
+from django.core.files.storage import FileSystemStorage
 '''
 def handler404(request, exception, template_name='vehiculo/404.html'):
     response = render_to_response('vehiculo/404.html', {},context_instance=RequestContext(request))
@@ -48,7 +50,10 @@ class CarroListView(ListView):
 	template_name = 'vehiculo/index.html'
 	model = Carro
 	queryset = Carro.objects.filter(esta_inspeccionado=True)
-		
+	
+	
+	
+	
 class BusquedaView(TemplateView):
 	template_name = 'vehiculo/busqueda.html'
  
@@ -73,6 +78,7 @@ def carro_new(request):
 				carro.save() #lanza error....
 			else:
 				carro.modelo = Modelo.objects.get(id=modelo)
+			
 			
 			ciudad = request.POST.get('ciudad')
 			ciudad_ = ciudad.replace(' ','') #	quitamos los espacios (no son alfanumericos)

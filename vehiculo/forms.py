@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 class CarroForm(ModelForm):
-	fields = ('placa', )
+	fields = ('placa','imagen',)
 	provincia = forms.ModelChoiceField(queryset = Provincia.objects.all(), empty_label=None)
 	color = forms.ModelChoiceField(queryset = Color.objects.all(), empty_label=None)
 	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.all())
@@ -39,7 +39,7 @@ class CarroForm(ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(CarroForm, self).__init__(*args, **kwargs)
 		self.fields['provincia'].empty_label = None
-		
+		#self.fields['imagen'].required = False
 class ColorForm(ModelForm):
 	exclude = ('id',)
 class ModeloForm(ModelForm):
