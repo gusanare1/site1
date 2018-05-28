@@ -68,7 +68,8 @@ class Carro(models.Model):
 	#inspeccion = models.OneToOneField(Inspeccion, on_delete=models.CASCADE, default=-1)
 	#enreadonly_fields = ('',)
 	#ant = models.ForeignKey(Ant, on_delete = models.CASCADE, default=-1)
-	imagen = models.ImageField( default = 'no_image.jpg')
+	imagen = models.ImageField( blank=True, null=True)
+	imagen_nombre = models.CharField(max_length=100, default="x.jpg")
 	def __str__(self):
 		if self.esta_inspeccionado:
 			tex_ = "(Esta Inspeccionado)"

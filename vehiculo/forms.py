@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 
 class CarroForm(ModelForm):
 	fields = ('placa','imagen',)
+	
 	provincia = forms.ModelChoiceField(queryset = Provincia.objects.all(), empty_label=None)
 	color = forms.ModelChoiceField(queryset = Color.objects.all(), empty_label=None)
 	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.all())
@@ -33,13 +34,16 @@ class CarroForm(ModelForm):
 		
 	class Meta:
 		#fields = ('anio','precio','esta_inspeccionado', 'provincia', 'ciudad', 'dueno')
-		exclude = ('id','esta_inspeccionado','inspeccion',)
+		exclude = ('id','esta_inspeccionado','inspeccion', 'imagen_nombre',
+		#'color','marca','modelo','provincia','ciudad'
+		)
 		model = Carro
 		readonly_fields = ('usuario',)
 	def __init__(self, *args, **kwargs):
 		super(CarroForm, self).__init__(*args, **kwargs)
+		
 		self.fields['provincia'].empty_label = None
-		#self.fields['imagen'].required = False
+		
 class ColorForm(ModelForm):
 	exclude = ('id',)
 class ModeloForm(ModelForm):

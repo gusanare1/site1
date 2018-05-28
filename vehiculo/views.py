@@ -57,6 +57,7 @@ class CarroListView(ListView):
 class BusquedaView(TemplateView):
 	template_name = 'vehiculo/busqueda.html'
  
+
 	
 def carro_new(request):
 	if not request.user.is_authenticated:
@@ -79,7 +80,41 @@ def carro_new(request):
 			else:
 				carro.modelo = Modelo.objects.get(id=modelo)
 			
+			from django.core.files.storage import FileSystemStorage
+			myfile = request.FILES['imagen']
+			fs = FileSystemStorage()
+			filename = fs.save(myfile.name, myfile)
+			carro.imagen_nombre = fs.url(filename)
 			
+			name = 'C:\\Users\\lenov\\Documents\\python_Win_Deb\\site1\\media\\'+filename
+			
+			from apiclient.discovery import build
+			from httplib2 import Http
+			from oauth2client import file, client, tools
+			from apiclient.http import MediaFileUpload
+			
+			# Setup the Drive v3 API
+			SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file'
+			store = file.Storage('credentials.json')
+			creds = store.get()
+			if not creds or creds.invalid:
+				flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
+				creds = tools.run_flow(flow, store)
+			service = build('drive', 'v3', http=creds.authorize(Http()))
+
+			folder_id = '158Sk_z9ERQR5pSY94x1bhw4_SOGeUjgg'
+			file_metadata = {
+				'name': filename,
+				'parents': [folder_id]
+			}
+			media = MediaFileUpload(name,
+									mimetype='image/jpeg',
+									resumable=True)
+			file = service.files().create(body=file_metadata,
+												media_body=media,
+												fields='id').execute()
+			print('File ID: %s' % file.get('id'))
+			carro.imagen_nombre = file.get('id')
 			ciudad = request.POST.get('ciudad')
 			ciudad_ = ciudad.replace(' ','') #	quitamos los espacios (no son alfanumericos)
 			patron ="\W" #CARACTERES NO ALFANUMERICOS (posible danino)
@@ -88,15 +123,19 @@ def carro_new(request):
 			else:
 				carro.ciudad = Ciudad.objects.get(id=ciudad)
 			carro.save()
-			mensaje(request, "Carro Creado")
+			mensaje(request, "Carro Creado "+filename+"..."+carro.imagen_nombre)
+			'''
+			import os
+			os.remove(name)
+			'''
 			return redirect('ind')
 	else:
 		form = CarroForm()
 		
 		form.usuario = User.objects.get(id=request.user.id)
 		form.fields['usuario'].initial = form.usuario.username
-		form.fields['provincia'].empty_label = None
-		form.fields['marca'].initial = 0
+		#form.fields['provincia'].empty_label = None
+		#form.fields['marca'].initial = 0
 	return render(request, 'vehiculo/carro_edit.html', {'form': form})
        
 def carro_edit(request, pk):

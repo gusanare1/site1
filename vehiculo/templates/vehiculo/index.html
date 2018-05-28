@@ -9,6 +9,7 @@
       {% for carro in carro_list %}
       <li>
         <a href="../../vehiculo/busqueda/{{ carro.id }}">{{ carro }}</a>
+		<img src="https://drive.google.com/uc?export=view&id={{ carro.imagen_nombre }}" width=40, height=40/>
       </li>
       {% endfor %}
 
