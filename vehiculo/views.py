@@ -86,8 +86,12 @@ def carro_new(request):
 			filename = fs.save(myfile.name, myfile)
 			carro.imagen_nombre = fs.url(filename)
 			
-			name = 'C:\\Users\\lenov\\Documents\\python_Win_Deb\\site1\\media\\'+filename
-			
+			import os
+			if os.name == 'posix':
+				name = "media/"
+			else: 
+				#name = 'C:\\Users\\lenov\\Documents\\python_Win_Deb\\site1\\media\\'+filename
+				name = 'C:\\Users\\lenov\\Documents\\python_Win_Deb\\site1\\media\\'+filename
 			from apiclient.discovery import build
 			from httplib2 import Http
 			from oauth2client import file, client, tools
