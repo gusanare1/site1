@@ -38,7 +38,7 @@ file = service.files().create(body=file_metadata,
 print('Folder ID: %s' % file.get('id'))
 '''
 
-
+'''
 folder_id = '158Sk_z9ERQR5pSY94x1bhw4_SOGeUjgg'
 file_metadata = {
     'name': 'photo.jpg',
@@ -55,3 +55,4 @@ print('File ID: %s' % file.get('id'))
 
 #DESCARGAR ARCHIVOS E INCRUSTARLOS EN HTTP
 
+'''
