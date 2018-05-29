@@ -5,36 +5,36 @@ from django.contrib.auth.models import User
 
 class Provincia(models.Model):
 	nombre = models.CharField(max_length=30)
-	
+
 	def __str__(self):
 		return self.nombre
-		
+
 class Ciudad(models.Model):
 	nombre = models.CharField(max_length=30)
 	provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
-	
+
 	def __str__(self):
 		return self.nombre
 
 class Marca(models.Model):
 	nombre = models.CharField(max_length=30)
-	
+
 	def __str__(self):
 		return self.nombre
-		
+
 class Modelo(models.Model):
 	nombre = models.CharField(max_length=30)
 	marca = models.ForeignKey(Marca, on_delete = models.CASCADE)
-	
+
 	def __str__(self):
 		return self.nombre
 
 class Color(models.Model):
 	nombre = models.CharField(max_length=30)
-		
+
 	def __str__(self):
 		return self.nombre
-	
+
 #DATOS SECUNDARIOS
 class Persona(models.Model):
 	#user = models.OneToOneField(User, on_delete=models.CASCADE, default=-1)
@@ -44,13 +44,7 @@ class Persona(models.Model):
 	def __str__(self):
 		return self.username+" "+self.cedula
 
-class Ant(models.Model):
-	
-	motor = models.CharField(max_length=50)
-	chasis = models.CharField(max_length=50)
-	def __str__(self):
-		return self.nombre
-		
+
 from django.contrib.auth.models import User
 
 class Carro(models.Model):
@@ -76,8 +70,15 @@ class Carro(models.Model):
 		else:
 			tex_ = "(No esta inspeccionado)"
 		return self.modelo.nombre+" "+self.placa+" "+tex_
-	
-	
+
+
+class Ant(models.Model):
+	carro = models.ForeignKey(Carro, on_delete=models.DO_NOTHING, default = -1)
+	motor = models.CharField(max_length=50)
+	chasis = models.CharField(max_length=50)
+	def __str__(self):
+		return self.nombre
+
 class Inspeccion(models.Model):
 	carro = models.ForeignKey(Carro, on_delete=models.DO_NOTHING, default = -1)
 	choque = models.CharField(max_length=20)

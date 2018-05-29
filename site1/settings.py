@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '6uw_d4r=b_2_02xdum(7yr!_7x92)2#w+syya!tnfy$5u46qrz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['localhost','gusanare.pythonanywhere.com','192.168.1.3']
 import logging
 if DEBUG:
@@ -45,10 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'vehiculo',
-	
+
     'bootstrap3',
 ]
-GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'credentials.json'
+#GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'credentials.json'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
