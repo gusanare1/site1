@@ -52,7 +52,8 @@ class CarroListView(ListView):
 	template_name = 'vehiculo/index.html'
 	model = Carro
 	queryset = Carro.objects.filter(esta_inspeccionado=True)
-
+	context_object_name='carro_list'
+	paginate_by = 4
 
 class BusquedaView(TemplateView):
 	template_name = 'vehiculo/busqueda.html'

@@ -12,7 +12,7 @@ from .models import Color, Marca, Modelo, Provincia, Ciudad, Carro, Persona, Ant
 #admin.site.register(Modelo)
 #admin.site.register(Provincia)
 #admin.site.register(Ciudad)
-#admin.site.register(Carro)
+admin.site.register(Carro)
 #admin.site.register(Persona)
 
 admin.site.register(Inspeccion)
