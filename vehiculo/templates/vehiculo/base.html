@@ -16,7 +16,7 @@
 			<meta name="viewport" content="width=device-width; maximum-scale=1; minimum-scale=1;" />
             <link rel="stylesheet" href="{% static 'css/blog.css' %}"/>
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
@@ -37,21 +37,21 @@ body {
 </style>
 		</head>
         <body>
-		
+
 <div class="content">
     <div class="row vertical-center-row">
-		
-		
-		
+
+
+
  <nav class="navbar navbar-default">
    <div class="container-fluid">
         <div class="navbar-header">
 		       <a class="navbar-brand" href="#">Shop Car</a>
 		</div>
  <ul class="navbar-nav mr-auto">
-               
+
         		<a href="{% url 'ind' %}">Index</a>
-		
+
 		 <a href="{% url 'carro_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
 
 <a href="{% url 'login_' %}">Login</a>
@@ -64,8 +64,14 @@ body {
 </nav>
 
 <div class="alert alert-info" role="alert">
-{{request.session.error}}
-
+{% if request.user.is_authenticated %}
+Bienvenido {{request.user.username}}
+{% else %}
+Usurio Invitado
+{% endif %}
+{% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+{% endfor %}
 </div>
 
             <div class="container">
@@ -76,7 +82,7 @@ body {
                     </div>
                 </div>
             </div>
-			
+
 	</div>
 </div>
         </body>

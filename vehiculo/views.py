@@ -14,6 +14,9 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 
 from django.core.files.storage import FileSystemStorage
+
+from django.contrib import messages
+from PIL import Image
 '''
 def handler404(request, exception, template_name='vehiculo/404.html'):
     response = render_to_response('vehiculo/404.html', {},context_instance=RequestContext(request))
@@ -40,13 +43,8 @@ def bad_request(request):
 
 
 def mensaje(request, mensaje):
-    if request.session['ver']:
-        request.session['error'] = mensaje
-        request.session['ver'] = False
+    messages.success(request, mensaje)
 
-'''
-gusanare@espol.edu.ec
-'''
 
 class CarroListView(ListView):
 	template_name = 'vehiculo/index.html'
@@ -61,11 +59,14 @@ class BusquedaView(TemplateView):
 
 
 def carro_new(request):
+
 	if not request.user.is_authenticated:
 		#request.session['error'] = "No logueado"
 		request.session['ver']= True
 		mensaje(request, 'No logueado')
 		return redirect('../../vehiculo/login')
+	#Guardando la imagen resizeado
+	size = (480,320)
 
 	if request.method == "POST":
 		form = CarroForm(request.POST)
@@ -73,6 +74,7 @@ def carro_new(request):
 			import re
 			carro = form.save(commit=False)
 			carro.usuario = request.user
+			#No usamos form-clean porque lo estoy trayendo de post...
 			modelo = request.POST.get('modelo')
 			modelo_ = modelo.replace(' ','') #	quitamos los espacios (no son alfanumericos)
 			patron ="\W" #CARACTERES NO ALFANUMERICOS (posible danino)
@@ -81,7 +83,6 @@ def carro_new(request):
 			else:
 				carro.modelo = Modelo.objects.get(id=modelo)
 
-			from django.core.files.storage import FileSystemStorage
 			myfile = request.FILES['imagen']
 			fs = FileSystemStorage()
 			filename = fs.save(myfile.name, myfile)
@@ -90,12 +91,15 @@ def carro_new(request):
 			import os
 			if os.name == 'posix':
 				#name = 'media/'+filename
-				name = os.path.join(os.path.dirname(os.path.dirname(__file__)),'media/',filename)
+				name_ = os.path.join(os.path.dirname(os.path.dirname(__file__)),'media/',filename)
 			else:
 				#name = 'C:\\Users\\lenov\\Documents\\python_Win_Deb\\site1\\media\\'+filename
-				name = 'C:\\Users\\lenov\\Documents\\python_Win_Deb\\site1\\media\\'+filename
+				name_ = 'C:\\Users\\lenov\\Documents\\python_Win_Deb\\site1\\media\\'+filename
 
-
+			n,e = os.path.splitext(name_)
+			name = n+"thumbnail"+e
+			img = Image.open(name_)
+			img.resize(size).save(name)
 
 			from apiclient.discovery import build
 			from httplib2 import Http
@@ -225,6 +229,7 @@ def signup(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             '''
+            mensaje(request, "Usuario creado")
             return redirect('ind')
     else:
         form = SignUpForm()
