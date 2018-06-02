@@ -4,7 +4,9 @@
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive_rtl.css' %}" />
-{% endblock %}
+<script type="text/javascript" src="{% static 'vehiculo/js/j1.js' %}"></script>
+
+  {% endblock %}
 
 {% load staticfiles %}
 
@@ -14,7 +16,7 @@
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
 			<meta name="viewport" content="width=device-width; maximum-scale=1; minimum-scale=1;" />
-            <link rel="stylesheet" href="{% static 'css/blog.css' %}"/>
+            <link rel="stylesheet" href="{% static 'vehiculo/css/c1.css' %}"/>
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,23 +46,17 @@ body {
 
 
  <nav class="navbar navbar-default">
-   <div class="container-fluid">
-        <div class="navbar-header">
-		       <a class="navbar-brand" href="#">Shop Car</a>
-		</div>
- <ul class="navbar-nav mr-auto">
-
-        		<a href="{% url 'ind' %}">Index</a>
-
-		 <a href="{% url 'carro_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-
+		
+ <ul class="navbar-nav mr-auto" style="margin-left:5%">
+<a href="{% url 'carro_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+<a href="{% url 'ind' %}">Index</a>		 
 <a href="{% url 'login_' %}">Login</a>
 <a href="{% url 'logout_' %}">Logout</a>
 <a href="{% url 'signup_' %}">Signup</a>
 <a href="{% url 'busqueda' %}">Busqueda</a>
 <a href="/admin" >Admin</a>
 </ul>
-</div>
+
 </nav>
 
 <div class="alert alert-info" role="alert">

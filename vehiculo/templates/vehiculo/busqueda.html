@@ -8,9 +8,7 @@
         <h1>Searching Car</h1>
 		
 		<input type='text' list='modelos' id='busqueda_modelo' placeholder='Busqueda por modelo'/>
-		<datalist id="modelos" name="modelos">
-		
-		</datalist>
+		<datalist id="modelos" name="modelos"/>
 		<div id='div_cars'>
 		<ul id='cars'>
 		
@@ -19,6 +17,12 @@
         <form method="POST" class="post-form">
 			{% csrf_token %}			
             
+			
+            </form>
+			
+			
+			
+			
 			
 			<script>
 			$(document).ready(function() {
@@ -65,5 +69,4 @@
                 }
         }   
 	  </script>
-            </form>
     {% endblock %}

@@ -25,8 +25,8 @@ MESSAGE_LEVEL = message_constants.INFO
 SECRET_KEY = '6uw_d4r=b_2_02xdum(7yr!_7x92)2#w+syya!tnfy$5u46qrz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['localhost','gusanare.pythonanywhere.com','192.168.1.3']
+DEBUG = False
+ALLOWED_HOSTS = ['localhost','gusanare.pythonanywhere.com','192.168.1.3','192.168.0.112']
 import logging
 if DEBUG:
     # will output to your console

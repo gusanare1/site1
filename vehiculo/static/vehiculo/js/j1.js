@@ -1,34 +1,3 @@
-{% extends 'vehiculo/base.html' %}
-
-	{% block javascript %}
-	  
-	{% endblock %}
-
-    {% block content %}
-       {% load bootstrap3 %}   
-<legend>Searchin Car</legend>
-        <form method="POST" class="post-form" role='form' enctype='multipart/form-data'>
-			{% csrf_token %}			
-
-<div class=""style="max-width:350px; margin:5% ">
-    <div class="row vertical-center-row">
-{% bootstrap_form form layout='vertical' %}   
-
-</div>
-</div> 
-
-
-<script>
-$(document).ready(function() {
-				   
-	$('select').append($("<option selected='selected'>", {
-    value: 0,
-    text: '---',}));       
-	
-	$("#id_provincia").on("change", getCiudades);
-	$("#id_marca").on("change", getModelos);
-});
-
         function getCiudades() {
             var ProvinciaId = $("#id_provincia").val();
             if (ProvinciaId) {
@@ -71,14 +40,5 @@ $(document).ready(function() {
                 $("#id_modelo").html("");
                 }
         }
-		
-		
-		
-</script>
 
-<div class="form-group">
-      <button type="submit" class="btn btn-primary">Buscar</button>
-		
-	</div>
- </form>
-	   {% endblock %}
+   

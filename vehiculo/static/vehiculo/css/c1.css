@@ -1,17 +1,47 @@
-ul{
-width:200px;
-background:blank;
-color:white;
-list-style-type:none;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+}
 
-padding:0;
+li {
+    float: left;
 }
-li{
-padding:0px;
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
-li:last-child{
-border-bottom:none;
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
 }
-li:hover{
-color:red;
+
+
+
+div.scrollmenu {
+    background-color: #fff;
+    overflow: auto;
+    white-space: nowrap;
 }
+
+div.scrollmenu a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+    background-color: #777;
+}
+
+
+

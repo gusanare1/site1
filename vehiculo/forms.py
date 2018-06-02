@@ -93,18 +93,20 @@ class SignUpForm(UserCreationForm):
 		model = User
 		fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email','celular','ciudad',)
 
-class BusquedaForm(ModelForm):
+class BusquedaForm(forms.Form):
+	anio = forms.IntegerField( label='Year')
+	precio = forms.FloatField(label="Precio Maximo")
+	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.all())
 	marca = forms.ModelChoiceField(queryset = Marca.objects.all())
 	modelo = forms.ModelChoiceField(queryset = Modelo.objects.all())
-	anio = forms.IntegerField( label='Year')
-
+	
 	def clean(self):
 		cd = self.cleaned_data
 		marca = cd.get("marca")
 		modelo = cd.get("modelo")
 		anio = cd.get("anio")
-
-		if anio<1900:
+		precio = cd.get("precio")
+		if anio<1000:
 			return ValidateError("Carro antiguo")
 
 		return cd

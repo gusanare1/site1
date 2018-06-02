@@ -14,9 +14,8 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 
 from django.core.files.storage import FileSystemStorage
-
+from django.http import Http404
 from django.contrib import messages
-from PIL import Image
 '''
 def handler404(request, exception, template_name='vehiculo/404.html'):
     response = render_to_response('vehiculo/404.html', {},context_instance=RequestContext(request))
@@ -51,11 +50,11 @@ class CarroListView(ListView):
 	model = Carro
 	queryset = Carro.objects.filter(esta_inspeccionado=True)
 	context_object_name='carro_list'
-	paginate_by = 4
-
+	paginate_by = 20
+'''
 class BusquedaView(TemplateView):
 	template_name = 'vehiculo/busqueda.html'
-
+'''
 
 
 def carro_new(request):
@@ -72,6 +71,7 @@ def carro_new(request):
 		form = CarroForm(request.POST)
 		if form.is_valid():
 			import re
+			from PIL import Image
 			carro = form.save(commit=False)
 			carro.usuario = request.user
 			#No usamos form-clean porque lo estoy trayendo de post...
@@ -173,21 +173,36 @@ def carro_edit(request, pk):
         return render(request, 'vehiculo/carro_edit.html', {'form': form})
 
 def form_busqueda(request):
+	
 	if request.method =="POST":
-		marca = request.POST.get("marca")
-		modelo = request.POST.get("modelo")
-		anio = request.POST.get("anio")
-
-		carros = Carro.objects.filter(marca__nombre=marca, modelo__nombre=modelo, anio=anio)[0]
-		carro = get_object_or_404(Carro, pk=carro.id)
-		inspeccion = get_object_or_404(Inspeccion, carro_id=carro.id)
-		return render(request, 'vehiculo/carro_detail.html', {'carro': carro, 'inspeccion':inspeccion})
-
+		form = BusquedaForm(request.POST)
+		if form.is_valid():        
+			modelo = request.POST.get("modelo") #modelo es POST... HAY Q LIMPIARLO
+			marca = form.cleaned_data['marca']
+			anio = form.cleaned_data['anio']
+			precio = form.cleaned_data['precio']
+			ciudad = form.cleaned_data['ciudad']
+			print (marca)
+			print(modelo)
+			print(precio)
+			print(anio)
+			print(ciudad)
+			try:
+				carros = Carro.objects.filter(marca=marca, modelo=modelo, anio=anio, precio__lte = precio, ciudad = ciudad, esta_inspeccionado=True)
+				print(carros)
+				carro = carros[0]
+			except:
+				mensaje(request, "No existen carro con esas coincidencias")
+				raise Http404
+			#igual va a tirar 404
+			
+		#return render(request, 'vehiculo/carro_detail.html', {'carro': carro, 'inspeccion':inspeccion})
+		return render(request, 'vehiculo/index.html', {'carro_list': carros, 'details' : 	True})
+		
 	else :
-		marcas = Marca.objects.all()
-		modelos = Modelo.objects.all()
+		form = BusquedaForm()
 
-		return render(request, 'vehiculo/carro_search.html', {'marcas': marcas, 'modelos':modelos})
+		return render(request, 'vehiculo/carro_search.html', {'form': form})
 
 '''
 SI NO HAY INSPECCION, NO SE MEUESTRA EL CARRO

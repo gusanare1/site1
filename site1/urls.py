@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include,path
-
+from vehiculo import views
 
 handler404 = 'vehiculo.views.handler404'
 handler500 = 'vehiculo.views.handler500'
@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 	
 	path('vehiculo/', include('vehiculo.urls')),
+	path(r'', views.CarroListView.as_view()),
 
 ]
 from django.conf.urls.static import static
