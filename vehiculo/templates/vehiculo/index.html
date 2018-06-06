@@ -9,51 +9,34 @@
 {% else %}
 	<div class = "container-lista-carros">
 {% endif %}
-      
+
 {% for carro in carro_list %}
 	{%if details%}
-		<div class = "container-carro">
+		<div class = "relative">
 	{%endif%}
 	<a href="../../vehiculo/busqueda/{{ carro.id }}">
-			<div style="margin-left:15%; ">
-				<img src="https://drive.google.com/uc?export=view&id={{ carro.imagen_nombre }}" width=100, height=100/>
-			</div>
+				<img style="margin-left:15%;" src="https://drive.google.com/uc?export=view&id={{ carro.imagen_nombre }}"/>
 					{% if details %}
-						
-						<div>
-							Precio: {{ carro.precio }}
-						</div>
-						
-						<div>
-							Placa: {{ carro.placa }}
-						</div>
-						
-						<div>
-							Año: {{ carro.anio}}
-						</div>
-						
-						<div>
-							{{ carro.color }}
-						</div>
-						
-						<div>
-							{{ carro.marca }}
-						</div>
-						
-						<div>
-							{{ carro.modelo }}
+						<div class="absolute">
+
+							<span><b>Precio:</b> {{ carro.precio }}</span>
+							<span><b>Placa:</b> {{ carro.placa }}</span>
+							<span><b>Año:</b> {{ carro.anio}}</span>
+							<span><b>Color:</b> {{ carro.color }}</span>
+							<span><b>Marca:</b> {{ carro.marca }}</span>
+							<span><b>Modelo:</b> {{ carro.modelo }}</span>
 						</div>
 					{% endif %}
 	  </a>
 {%if details%}
-	</div>	  
-{% endif %}	  
+	</div>
+{% endif %}
 
       {% endfor %}
 
-</div>	  
-	  
-	  
+</div>
+
+
 {% if is_paginated %}
   <ul class="pagination">
     {% if page_obj.has_previous %}
