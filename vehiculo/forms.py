@@ -99,7 +99,7 @@ class BusquedaForm(forms.Form):
 	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.all())
 	marca = forms.ModelChoiceField(queryset = Marca.objects.all())
 	modelo = forms.ModelChoiceField(queryset = Modelo.objects.all())
-	
+
 	def clean(self):
 		cd = self.cleaned_data
 		marca = cd.get("marca")
@@ -110,3 +110,8 @@ class BusquedaForm(forms.Form):
 			return ValidateError("Carro antiguo")
 
 		return cd
+
+class LoginForm(forms.Form):
+    attrs = {"type": "password"}
+    username = forms.CharField(max_length=32)
+    password = forms.CharField(max_length=32,widget=forms.TextInput(attrs=attrs))
