@@ -17,14 +17,16 @@ from django.contrib import admin
 from django.urls import include, path
 from vehiculo import views
 
+from django_private_chat import urls as django_private_chat_urls
+ 
 handler404 = 'vehiculo.views.handler404'
 handler500 = 'vehiculo.views.handler500'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+	path(r'', include('django_private_chat.urls')),
 	path('vehiculo/', include('vehiculo.urls')),
-	path(r'', views.CarroListView.as_view()),
+	#path(r'', views.CarroListView.as_view()),
 
 ]
 from django.conf.urls.static import static
@@ -32,3 +34,5 @@ from django.conf import settings
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+	

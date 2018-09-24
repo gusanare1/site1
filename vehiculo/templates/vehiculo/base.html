@@ -70,8 +70,9 @@ alert("Click boton 2");
 <a href="{% url 'ind' %}">Index</a>		 
 <a href="{% url 'login_' %}">Login</a>
 <a href="{% url 'logout_' %}">Logout</a>
-<a href="{% url 'signup_' %}">Signup</a>
+<a href="{% url 'signup_' %}">Sign-up</a>
 <a href="{% url 'busqueda' %}">Busqueda</a>
+<a href=".../../../dialogs/atcl">Atencion a cliente</a>
 <a href="/admin" >Admin</a>
 </ul>
 
@@ -91,9 +92,14 @@ Usurio Invitado
             <div class="container">
                 <div class="row">
                     <div class="col-md-8" id="contenido" >
-                        {% block content %}
+                        {% block extra_js %}
+						{% endblock extra_js %}
+
+						{% block content %}
                         {% endblock %}
-                    </div>
+
+						
+						</div>
                 </div>
             </div>
 

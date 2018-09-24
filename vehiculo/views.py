@@ -22,15 +22,20 @@ def handler404(request, exception, template_name='vehiculo/404.html'):
     response.status_code = 404
     return response
 '''
+'''
 def handler404(request, exception):
-    return render(request, 'vehiculo/404.html', locals())
-
+	mensaje(request, 'No logueado')
+	return redirect('../../vehiculo/index.html')
+    #return render(request, 'vehiculo/404.html', locals())
+'''
 def handler404(request):
+	#mensaje(request, 'No logueado')
+	#return redirect('../../vehiculo/index.html')
     return render(request, 'vehiculo/404.html', status=404)
-
+'''
 def handler500(request, exception):
-    return render(request, 'vehiculo/500.html', locals())
-
+    return render(request, 'vehiculo/index.html', locals())
+'''
 def handler500(request):
     return render(request, 'vehiculo/500.html', status=500)
 

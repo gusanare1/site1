@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 	'vehiculo',
 
     'bootstrap3',
+	'django_private_chat',
 ]
 #GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'credentials.json'
 
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'site1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'vehiculo/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'vehiculo/templates/vehiculo')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,6 +79,7 @@ TEMPLATES = [
             ],
         },
     },
+	
 ]
 
 WSGI_APPLICATION = 'site1.wsgi.application'
@@ -135,3 +137,22 @@ STATIC_ROOT = "/static/"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+##########
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
+# Channel layer definitions
+# http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+       "ROUTING": "multichat.routing.channel_routing", # We will create it in a moment
+    },
+}
+###########
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
