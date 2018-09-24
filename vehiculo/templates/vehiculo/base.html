@@ -20,42 +20,87 @@
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+html, body {
+    height: 100%;
+}
+
+body {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.content {
+
+    height: 100%;
+}
+
+</style>
+
+<script>
+function but1() {
+
+alert("Click boton 1");
+$("#contenido").load("{% url 'login_' %}");
+
+
+
+
+    }
+function but2(event) {
+alert("Click boton 2");
+
+        $("#contenido").load("{% url 'busqueda' %}");  
+    }
+	</script>
+
 		</head>
         <body>
 
 <div class="content">
-
     <div class="row vertical-center-row">
-        <nav class="navbar navbar-default nav">
-            <ul class="navbar-nav mr-auto" style="margin-left:2%">
-                <a href="{% url 'carro_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-                <a href="{% url 'ind' %}">Index</a>
-                <a href="{% url 'login_' %}">Login</a>
-                <a href="{% url 'logout_' %}">Logout</a>
-                <a href="{% url 'signup_' %}">Signup</a>
-                <a href="{% url 'busqueda' %}">Busqueda</a>
-                <a href="/admin" >Admin</a>
-            </ul>
-        </nav>
 
-        <div class="alert alert-info" role="alert" >
-        {% if request.user.is_authenticated %}
-        Bienvenido {{request.user.username}}
-        {% else %}
-            <li>Usurio Invitado</li><br/>
-        {% endif %}
-        {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li><br/>
-        {% endfor %}
-        </div>
 
-        <div class="container">
 
-                    {% block content %}
-                    {% endblock %}
+ <nav class="navbar navbar-default">
+		
+ <ul class="navbar-nav mr-auto" style="margin-left:5%">
+<a href="{% url 'carro_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+<a href="{% url 'ind' %}">Index</a>		 
+<a href="{% url 'login_' %}">Login</a>
+<a href="{% url 'logout_' %}">Logout</a>
+<a href="{% url 'signup_' %}">Signup</a>
+<a href="{% url 'busqueda' %}">Busqueda</a>
+<a href="/admin" >Admin</a>
+</ul>
 
-        </div>
+</nav>
+
+<div class="alert alert-info" role="alert">
+{% if request.user.is_authenticated %}
+Bienvenido {{request.user.username}}
+{% else %}
+Usurio Invitado
+{% endif %}
+{% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+{% endfor %}
+</div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8" id="contenido" >
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
 	</div>
 </div>
+<button id='boton1' onclick="but1()" type="button">BotonLogin </button>
+<button id='boton2' onclick="but2()" type="button">BotonBusqueda </button>
+
         </body>
     </html>
