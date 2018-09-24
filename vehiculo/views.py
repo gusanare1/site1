@@ -16,6 +16,17 @@ from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from django.http import Http404
 from django.contrib import messages
+
+
+
+
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from vehiculo.models import Serie
+from vehiculo.serializers import SerieSerializer
+
 '''
 def handler404(request, exception, template_name='vehiculo/404.html'):
     response = render_to_response('vehiculo/404.html', {},context_instance=RequestContext(request))
@@ -180,6 +191,7 @@ def form_busqueda(request):
 			modelo = request.POST.get("modelo") #modelo es POST... HAY Q LIMPIARLO
 			marca = form.cleaned_data['marca']
 			anio = form.cleaned_data['anio']
+			tiempo = form.cleaned_data['tiempo']
 			precio = form.cleaned_data['precio']
 			ciudad = form.cleaned_data['ciudad']
 			print (marca)
@@ -188,7 +200,7 @@ def form_busqueda(request):
 			print(anio)
 			print(ciudad)
 			try:
-				carros = Carro.objects.filter(marca=marca, modelo=modelo, anio=anio, precio__lte = precio, ciudad = ciudad, esta_inspeccionado=True)
+				carros = Carro.objects.filter(marca=marca, modelo=modelo, anio__gte=anio, anio__lte=(anio+tiempo), precio__lte = precio, ciudad = ciudad, esta_inspeccionado=True)
 				print(carros)
 				carro = carros[0]
 			except:
@@ -277,4 +289,25 @@ def login_(request):
 def logout_(request):
     auth.logout(request)
     # Redirect to a success page.
-    return HttpResponseRedirect("/vehiculo/ind")
+    return HttpResponseRedirect("/")
+
+#JSON..... objectos creados en shell
+class JSONResponse(HttpResponse):
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type']='application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+
+@csrf_exempt
+def serie_list(request):
+    if request.method=="GET":
+        series =  Serie.objects.all()
+        serializer= SerieSerializer(series, many=True)
+        return JSONResponse(serializer.data)
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = SerieSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+        return JSONResponse(serializer.errors, status=400)
