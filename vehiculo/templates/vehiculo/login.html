@@ -1,28 +1,31 @@
+<<<<<<< HEAD
 {% extends 'vehiculo/base.html' %}
 
 	{% block content %}
 	   
  
+=======
+{% extends "vehiculo/base.html" %}
+
+{% block content %}
+       {% load bootstrap3 %}
+
+>>>>>>> a163f3ef417a696ce2d2ba372ae2513949e351ea
   {% if form.errors %}
     <p class="error">Sorry, that's not a valid username or password</p>
   {% endif %}
- 	   {% load bootstrap3 %}
 
-  <form action='.' method='post' role='form'>
-{% csrf_token %} 
-<div >
- <label for="username">User name:</label>
-    <input type="text" name="username" value="" id="username">
-    </div>
-	<div>
-	<label for="password">Password:</label>
-    <input type="password" name="password" value="" id="password">
- </div>
-     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-    <input type="hidden" name="next" value="{{ next|escape }}" />
+  <form action='.' method='post' role='form' >
+{% csrf_token %}
+{% bootstrap_form form layout='vertical' %}
+    <button type="submit">Login</button>
+
   </form>
+<<<<<<< HEAD
  
+=======
+
+{% endblock %}
+>>>>>>> a163f3ef417a696ce2d2ba372ae2513949e351ea
 
 {% endblock %}

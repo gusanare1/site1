@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .forms import CarroForm, SignUpForm, BusquedaForm
+from .forms import CarroForm, SignUpForm, BusquedaForm, LoginForm
 from .models import Color, Marca, Modelo, Provincia, Ciudad, Carro, Inspeccion, Persona
 # Create your views here.
 from django.http import JsonResponse
@@ -173,10 +173,10 @@ def carro_edit(request, pk):
         return render(request, 'vehiculo/carro_edit.html', {'form': form})
 
 def form_busqueda(request):
-	
+
 	if request.method =="POST":
 		form = BusquedaForm(request.POST)
-		if form.is_valid():        
+		if form.is_valid():
 			modelo = request.POST.get("modelo") #modelo es POST... HAY Q LIMPIARLO
 			marca = form.cleaned_data['marca']
 			anio = form.cleaned_data['anio']
@@ -195,10 +195,10 @@ def form_busqueda(request):
 				mensaje(request, "No existen carro con esas coincidencias")
 				raise Http404
 			#igual va a tirar 404
-			
+
 		#return render(request, 'vehiculo/carro_detail.html', {'carro': carro, 'inspeccion':inspeccion})
 		return render(request, 'vehiculo/index.html', {'carro_list': carros, 'details' : 	True})
-		
+
 	else :
 		form = BusquedaForm()
 
@@ -254,17 +254,25 @@ def signup(request):
 def login_(request):
 
     if request.method == "POST":
-    	username = request.POST['username']
-    	password = request.POST['password']
-    	user = auth.authenticate(username=username, password=password)
+        form = LoginForm(request.POST)
+        if form.is_valid():
 
-    	if user is not None and user.is_active:
-    		auth.login(request, user)
-    		return HttpResponseRedirect("../new/")
-    	else:
-    		return HttpResponseRedirect("invalid/")
+        	username = form.cleaned_data['username']
+        	password = form.cleaned_data['password']
+        	user = auth.authenticate(username=username, password=password)
+
+        	if user is not None and user.is_active:
+        		auth.login(request, user)
+        		return HttpResponseRedirect("../new/")
+        	else:
+        	    mensaje(request, "Usuario-password incorrecto.\n")
+        	    return HttpResponseRedirect("../index")
+        else:
+            mensaje(request, "Usuario/password incorrecto.\n")
+            return render(request, 'vehiculo/login.html',{'form': form})
     else:
-    	return render(request, 'vehiculo/login.html')
+        form = LoginForm()
+        return render(request, 'vehiculo/login.html',{'form': form})
 
 def logout_(request):
     auth.logout(request)
