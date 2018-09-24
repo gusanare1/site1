@@ -94,7 +94,8 @@ class SignUpForm(UserCreationForm):
 		fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email','celular','ciudad',)
 
 class BusquedaForm(forms.Form):
-	anio = forms.IntegerField( label='Year')
+	anio = forms.IntegerField( label='Año inicio busqueda')
+	tiempo = forms.IntegerField( label='Buscar carros hasta ____ años despues')
 	precio = forms.FloatField(label="Precio Maximo")
 	ciudad = forms.ModelChoiceField(queryset = Ciudad.objects.all())
 	marca = forms.ModelChoiceField(queryset = Marca.objects.all())

@@ -20,7 +20,7 @@ from .ajax import get_ciudades, get_modelos, get_cars_by_model_name, get_model_n
 
 
 urlpatterns = [
-path(r'index', views.CarroListView.as_view(), name='ind'),	
+path(r'index', views.CarroListView.as_view(), name='ind'),
 
 		path(r'busqueda/', views.form_busqueda, name='busqueda'),
         path(r'busqueda/<int:pk>/', views.carro_detail, name="carro_detail"),
@@ -32,4 +32,5 @@ path(r'ajax/get_model_name', get_model_name, name = 'get_model_name'),
 	path(r'login/',  views.login_, name='login_'),
     path(r'logout/', views.logout_, name='logout_'),
 	path(r'signup/', views.signup, name='signup_'),
+	path(r'lista/',views.serie_list),
 	]

@@ -21,6 +21,7 @@ MESSAGE_LEVEL = message_constants.INFO
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '6uw_d4r=b_2_02xdum(7yr!_7x92)2#w+syya!tnfy$5u46qrz'
 
@@ -47,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'vehiculo',
-
+    'rest_framework',
     'bootstrap3',
 	'django_private_chat',
 ]
