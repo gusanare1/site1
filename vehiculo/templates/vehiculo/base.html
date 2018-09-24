@@ -37,6 +37,24 @@ body {
 }
 
 </style>
+
+<script>
+function but1() {
+
+alert("Click boton 1");
+$("#contenido").load("{% url 'login_' %}");
+
+
+
+
+    }
+function but2(event) {
+alert("Click boton 2");
+
+        $("#contenido").load("{% url 'busqueda' %}");  
+    }
+	</script>
+
 		</head>
         <body>
 
@@ -72,7 +90,7 @@ Usurio Invitado
 
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-8" id="contenido" >
                         {% block content %}
                         {% endblock %}
                     </div>
@@ -81,5 +99,8 @@ Usurio Invitado
 
 	</div>
 </div>
+<button id='boton1' onclick="but1()" type="button">BotonLogin </button>
+<button id='boton2' onclick="but2()" type="button">BotonBusqueda </button>
+
         </body>
     </html>
